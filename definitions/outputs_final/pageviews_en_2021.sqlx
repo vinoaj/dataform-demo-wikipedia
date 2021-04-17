@@ -1,0 +1,22 @@
+config {
+  type: "incremental",
+  bigquery: {
+    partitionBy: "DATE(datehour)",
+    clusterBy: ["wiki", "title"],
+    labels: {
+      "env": "dev",
+      "purpose": "demo",
+      "owner": "vinoaj"
+    }
+  }
+}
+
+SELECT datehour, wiki, title, views
+FROM ${ref("pageviews_2021")}
+WHERE wiki LIKE 'en%'
+${when(incremental(), 
+        //If in incremental mode, look for the newest records
+        `AND datehour > (SELECT MAX(datehour) FROM ${self()})`, 
+        // Else condition. We need this to satisfy mandatory filter by partition
+        `AND datehour >= "2021-01-01"` 
+      )}

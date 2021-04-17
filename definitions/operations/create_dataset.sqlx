@@ -1,0 +1,8 @@
+config {
+    type: "operations"
+}
+
+CREATE SCHEMA IF NOT EXISTS dataform_sandbox
+OPTIONS (
+	description="Dataform sandbox"
+)

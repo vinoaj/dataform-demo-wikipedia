@@ -1,0 +1,10 @@
+config {
+  type: "declaration",
+  database: "bigquery-public-data",
+  schema: "wikipedia",
+  name: "pageviews_2021",
+  description: "Wikipedia pageviews from " + 
+    "http://dumps.wikimedia.your.org/other/pageviews/, partitioned by date, " + 
+    "clustered by (wiki, title). " + 
+    "Original source: bigquery-public-data.wikipedia"
+}
