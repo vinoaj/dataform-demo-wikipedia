@@ -1,0 +1,14 @@
+config {
+  type: "table"
+}
+
+SELECT
+  CONCAT("pageviews_", _TABLE_SUFFIX) AS table,
+  MAX(datehour) AS max_datehour
+FROM
+  `dataform_sandbox.pageviews_*`
+WHERE _TABLE_SUFFIX IN (
+    SELECT SUBSTR(table_name, 11)
+    FROM `vinoaj-sandbox.dataform_sandbox.INFORMATION_SCHEMA.TABLES`
+    WHERE REGEXP_CONTAINS(table_name, r"pageviews_.*_2021"))
+GROUP BY _TABLE_SUFFIX

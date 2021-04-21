@@ -1,9 +1,34 @@
 {
-    "environments": [
+  "environments": [
+    {
+      "name": "production",
+      "configOverride": {},
+      "schedules": [
         {
-            "name": "production",
-            "configOverride": {},
-            "gitRef": "master"
+          "name": "daily_morning_run",
+          "cron": "0 21 * * mon,tue,wed,thu,fri,sat,sun",
+          "notify": [
+            {
+              "channel": "notification_email",
+              "statuses": [
+                "SUCCESS",
+                "FAILURE"
+              ]
+            }
+          ]
         }
-    ]
+      ],
+      "gitRef": "master"
+    }
+  ],
+  "notificationChannels": [
+    {
+      "name": "notification_email",
+      "email": {
+        "to": [
+          "vinoaj@google.com"
+        ]
+      }
+    }
+  ]
 }

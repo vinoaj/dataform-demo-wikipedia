@@ -11,12 +11,24 @@ config {
   }
 }
 
+pre_operations {
+  DECLARE max_datehour TIMESTAMP;
+  SET max_datehour = (
+    SELECT max_datehour 
+    FROM ${ref("max_times")} 
+    WHERE table = "pageviews_en_2021"
+  );
+}
+
 SELECT datehour, wiki, title, views
 FROM ${ref("pageviews_2021")}
 WHERE wiki LIKE 'en%'
 ${when(incremental(), 
-        //If in incremental mode, look for the newest records
-        `AND datehour > (SELECT MAX(datehour) FROM ${self()})`, 
+        //If in incremental mode, look for the newest records. 
+        //`datehour >= "2021-01-01"` is a brute force hack to satisfy the
+        //  requirement that partition filters must have a constant expression
+        //  https://cloud.google.com/bigquery/docs/querying-partitioned-tables#pruning_limiting_partitions
+        `AND datehour >= "2021-01-01" AND datehour >= max_datehour`, 
         // Else condition. We need this to satisfy mandatory filter by partition
         `AND datehour >= "2021-01-01"` 
       )}

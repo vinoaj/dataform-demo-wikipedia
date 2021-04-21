@@ -1,6 +1,6 @@
 {
     "warehouse": "bigquery",
-    "defaultSchema": "dataform",
+    "defaultSchema": "dataform_sandbox",
     "assertionSchema": "dataform_assertions",
     "defaultDatabase": "vinoaj-sandbox"
 }
