@@ -1,0 +1,14 @@
+config {
+  type: "table",
+  dependencies: ["wikipedia_en_arima"],
+  tags: ["predict"]
+}
+
+SELECT *
+FROM ML.FORECAST(
+    MODEL ${ref("wikipedia_en_arima")},
+    STRUCT(
+        14 AS horizon,
+        0.8 AS confidence_level
+    )
+)

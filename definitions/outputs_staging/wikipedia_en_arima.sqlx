@@ -1,0 +1,17 @@
+config {
+  type: 'operations',
+  hasOutput: true,
+  // tags: ["training"]
+}
+
+CREATE OR REPLACE MODEL ${self()}
+OPTIONS (
+    MODEL_TYPE = "ARIMA_PLUS",
+    TIME_SERIES_TIMESTAMP_COL = "date",
+    TIME_SERIES_DATA_COL = "total_views",
+    HOLIDAY_REGION = "GLOBAL"
+)
+AS
+SELECT DATE(datehour) AS date, SUM(views) AS total_views
+FROM ${ref("pageviews_en_2021")}
+GROUP BY date, views
