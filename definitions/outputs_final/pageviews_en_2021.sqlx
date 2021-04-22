@@ -8,6 +8,14 @@ config {
       "purpose": "demo",
       "owner": "vinoaj"
     }
+  },
+  assertions: {
+    // uniqueKey: ["user_id"],
+    nonNull: ["datehour", "wiki", "title", "views"],
+    rowConditions: [
+      "views > 0",
+      "wiki like 'en%'"
+    ]
   }
 }
 
