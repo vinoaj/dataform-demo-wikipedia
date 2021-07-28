@@ -16,6 +16,10 @@
               ]
             }
           ]
+        },
+        {
+          "name": "new_schedule",
+          "cron": "56 18 * * *"
         }
       ],
       "gitRef": "master"
